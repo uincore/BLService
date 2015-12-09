@@ -34,5 +34,6 @@ public:
 	~CTPprotocol(void);
 
 	int Send(UINT nai,unsigned char *data,UINT length);
+	static UINT ReceiveThread(void *param);
 };
 

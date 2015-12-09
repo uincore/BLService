@@ -110,7 +110,7 @@ typedef enum {
 #define C_SID_RequestDownload			0x34
 #define C_SID_TransferData				0x36
 #define C_SID_RequestTransferExit		0x37
-
+#define C_CONFIG_FILE_NAME				_T("config.ini")
 
 typedef struct apdu_response {
 	UINT			aai;
@@ -132,7 +132,19 @@ typedef struct can_msg {
 #include "TPprotocol.h"
 #include "UDSprotocol.h"
 #include "prog.h"
+#include "Config.h"
 
 extern CDeviceCAN DeviceCan;
 extern int g_module;
 extern CBin g_binDownload;
+
+// config
+extern int G_MEM_ST;
+extern int G_MEM_ED;
+extern int G_N_As;
+extern int G_N_Ar;
+extern int G_N_Bs;
+extern int G_N_Br;
+extern int G_N_Cs;
+extern int G_N_Cr;
+extern int G_P2_CLIENT;

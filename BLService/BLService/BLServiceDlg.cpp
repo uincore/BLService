@@ -130,6 +130,9 @@ BOOL CBLServiceDlg::OnInitDialog()
 	m_cbCANSpeed.SetCurSel(0);//250 speed preselected
 	m_edbImageSize.SetWindowTextA("0");
 	m_edbImageSize.EnableWindow(false);
+	// 读取ini
+	CConfig config;
+	config.ReadINI();
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -383,7 +386,6 @@ void CBLServiceDlg::OnBnClickedConnect()
 			printf("请先设置波特率！\n");
 			return;
 		}
-		DeviceCan.SetDevType(0);
 		m_cbCANSpeed.GetWindowText(Strtemp);
 		DeviceCan.SetCANBPS(atoi(Strtemp));
 		// prog.Set_Module(m_cbModule.GetCurSel());

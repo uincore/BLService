@@ -209,7 +209,6 @@ public:
 	~CDeviceCAN();
 private:
 	static HINSTANCE GetDllHandle(int HWType);
-	int m_devicetype;
 	int  m_deviceindex;
 	int m_canindex;
 	int m_canBaudrate;
@@ -219,8 +218,6 @@ public:
 	MsgBuffer m_MsgBuffer;//ª∫≥Â∂‘œÛ
 	int canhandle;
 public: 
-	int GetDevType();
-	void SetDevType(int devtype);
 	int GetCANBPS();
 	void SetCANBPS(int canbps);
 	int GetUSBCANConnectState();
@@ -233,6 +230,5 @@ public:
 	int CAN_Send(VCI_CAN_OBJ *msg);
 	void Push(VCI_CAN_OBJ p);
 	void  StartReceive();
-	static UINT CAN_ReceiveThread(void *param);
 	int GetMsg(st_can_msg& msg);
 };

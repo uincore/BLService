@@ -1,9 +1,10 @@
 #include "StdAfx.h"
 #include "TPprotocol.h"
-
+#include "kavser\canlib.h"
 
 CTPprotocol::CTPprotocol(void)
 {
+
 }
 
 
@@ -11,8 +12,12 @@ CTPprotocol::~CTPprotocol(void)
 {
 }
 
+// 返回值
+//  0:发送成功
+//  -9:超时
 int CTPprotocol::Send(UINT nai,unsigned char *data,UINT length)
 {
+	int rt =0;
 	unsigned char sn = 0;
 	int index = 0;
 	int bs = 0;
@@ -50,13 +55,20 @@ int CTPprotocol::Send(UINT nai,unsigned char *data,UINT length)
 			memcpy(canbuf.Data+2,data,length);
 		}
 		DeviceCan.CAN_Send(&canbuf);
+		CTime timest = CTime::GetCurrentTime();
+		CTime timeed;
 		st_can_msg revmsg;
 		st_npdu_flow_control npdufc;
 		st_npdu_consecutive_frame more;
 		more.npci_type = NPDU_MORE;
-
+		int timeout = G_N_As + G_N_Bs;
 		while(1)
 		{
+			timeed = CTime::GetCurrentTime();
+			if(timeed-timest>timeout){
+				rt = -9; // timeout
+				break;
+			}
 			if(DeviceCan.GetMsg(revmsg)==0)
 			{
 				memcpy(&npdufc,revmsg.u8_msgDat,3);
@@ -88,6 +100,7 @@ int CTPprotocol::Send(UINT nai,unsigned char *data,UINT length)
 								index += 7;
 							}
 							DeviceCan.CAN_Send(&canbuf);
+							timest = CTime::GetCurrentTime();
 							Sleep(npdufc.stmin);
 						}
 					}
@@ -96,5 +109,41 @@ int CTPprotocol::Send(UINT nai,unsigned char *data,UINT length)
 		}
 	}
 	
+	return rt;
+}
+
+UINT CTPprotocol::ReceiveThread(void *param)
+{
+	CDeviceCAN * self = (CDeviceCAN *)param; 
+
+		VCI_CAN_OBJ m_frameinfo;
+	  unsigned int    j;
+      long            id;
+      unsigned char   data[8];
+      unsigned int    dlc;
+      unsigned int    flags;
+      DWORD           time;
+
+	  int           stat;
+	  do
+	  {
+	    stat = canRead(self->canhandle, &id, &data[0], &dlc, &flags, &time);	 
+		if (stat == canERR_NOMSG)
+		{
+			return 0;
+		}
+		if (stat == canOK) 
+		{
+			if(((id & 0xFFFFFF00) == 0x0FFF0E00) ||((id & 0xFFFFFF00) == 0x0FEFF900))
+			{
+				//memset(frameinfo,0,sizeof(frameinfo));
+				m_frameinfo.ID = id;
+				m_frameinfo.DataLen = dlc;
+				memcpy(m_frameinfo.Data,data,dlc);
+				self->m_MsgBuffer.Push(m_frameinfo);
+			}
+		}
+	  }while(!(stat & canERR_NOMSG));
+
 	return 0;
 }
