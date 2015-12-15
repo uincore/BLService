@@ -83,12 +83,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>kavser;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kavser\canlib32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -117,6 +119,10 @@
     <ClInclude Include="BLService.h" />
     <ClInclude Include="BLServiceDlg.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="cuds.h" />
+    <ClInclude Include="cudsapp.h" />
+    <ClInclude Include="cudscfg.h" />
+    <ClInclude Include="cudstp.h" />
     <ClInclude Include="DeviceCAN.h" />
     <ClInclude Include="kavser\canlib.h" />
     <ClInclude Include="prog.h" />
@@ -133,6 +139,9 @@
     <ClCompile Include="BLService.cpp" />
     <ClCompile Include="BLServiceDlg.cpp" />
     <ClCompile Include="Config.cpp" />
+    <ClCompile Include="cuds.c" />
+    <ClCompile Include="cudsapp.c" />
+    <ClCompile Include="cudstp.c" />
     <ClCompile Include="DeviceCAN.cpp" />
     <ClCompile Include="prog.cpp" />
     <ClCompile Include="S19.cpp">

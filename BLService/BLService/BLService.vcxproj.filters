@@ -76,6 +76,18 @@
     <ClInclude Include="Bin.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="cudscfg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cuds.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cudstp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cudsapp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BLService.cpp">
@@ -106,6 +118,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Bin.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cuds.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cudstp.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cudsapp.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
